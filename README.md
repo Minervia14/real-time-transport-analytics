@@ -1,5 +1,9 @@
 # Real-Time Transport Analytics
 
+_Kurze Zusammenfassung:_  
+Echtzeit-Streaming-Plattform zur Analyse von Verkehrsverspätungen mit Kafka, Spark Structured Streaming und Delta Lake.
+
+
 ## Executive Summary
 This system delivers near real-time visibility into transport delays by processing live vehicle and weather streams at scale. It is designed as a production-grade streaming analytics platform using a modern lakehouse architecture. The focus is on data reliability, low-latency insights, and operational readiness rather than experimentation or demo-only pipelines.
 
@@ -18,7 +22,7 @@ Batch analytics or ad-hoc dashboards are insufficient. This problem requires a s
 ---
 
 ## Architecture Overview
-The system is built around a real-time lakehouse architecture, separating ingestion, processing, storage, and consumption concerns.
+The system is built around a real-time lakehouse architecture with clear separation of ingestion, processing, storage, and consumption responsibilities, enabling independent scaling and operational isolation.
 
 ![Architecture Diagram](https://github.com/user-attachments/assets/02e09594-e4f7-4811-b3d1-197328e5f5c0)
 
@@ -60,6 +64,7 @@ The platform is designed to run in the EU-Central-1 (Frankfurt) region to align 
 ### 3. Aggregation & Gold Layer
 - Windowed aggregations (5-minute sliding windows) compute KPIs such as average delay per route.
 - Results are written to Gold tables optimized for analytics and dashboards.
+- An alert is triggered when the average delay for a route exceeds a defined threshold (e.g., 10 minutes) over a sliding window.
 
 **Purpose:** Business-level metrics with low latency and high reliability.
 
@@ -95,8 +100,7 @@ The Bronze/Silver/Gold model enforces clear ownership boundaries, simplifies deb
 - End-to-end streaming architecture, not isolated components
 - Real-time joins and windowed aggregations, not trivial transformations
 - Explicit handling of data quality, schema evolution, and operational concerns
-- Designed as an internal analytics system, not a tutorial pipeline
-
+- Designed as an internal analytics system with operational constraints, not a demo or learning-only pipeline
 The focus is on correctness, maintainability, and production-readiness.
 
 ---
@@ -106,6 +110,7 @@ The focus is on correctness, maintainability, and production-readiness.
 - Kafka topics are created at startup.
 - Spark streaming jobs consume events and write to Delta tables.
 - Grafana connects to Gold tables to visualize metrics and trigger alerts.
+{The architecture is intentionally lightweight and can be operated on small cloud instances (e.g., t3.medium class) with minimal cost for development and testing.}
 
 Detailed commands are intentionally omitted to keep the focus on system design rather than setup mechanics.
 
