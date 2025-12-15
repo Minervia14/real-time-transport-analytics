@@ -22,9 +22,11 @@ Batch analytics or ad-hoc dashboards are insufficient. This problem requires a s
 ---
 
 ## Architecture Overview
-The system is built around a real-time lakehouse architecture with clear separation of ingestion, processing, storage, and consumption responsibilities, enabling independent scaling and operational isolation.
+The system is built around a real-time lakehouse architecture with clear separation of ingestion, processing, storage, and consumption responsibilities, enabling independent scaling and operational isolation. Each layer is designed to tolerate late, duplicate, or malformed events without impacting downstream consumers.
 
-![Architecture Diagram](https://github.com/user-attachments/assets/02e09594-e4f7-4811-b3d1-197328e5f5c0)
+The diagram below illustrates the end-to-end data flow and responsibility boundaries across the streaming pipeline.
+
+![Architecture Diagram](https://github.com/user-attachments/assets/b137f5af-1c93-4c4a-a4e4-0644f845aa6a)
 
 
 Key characteristics:
@@ -101,7 +103,8 @@ The Bronze/Silver/Gold model enforces clear ownership boundaries, simplifies deb
 - Real-time joins and windowed aggregations, not trivial transformations
 - Explicit handling of data quality, schema evolution, and operational concerns
 - Designed as an internal analytics system with operational constraints, not a demo or learning-only pipeline
-The focus is on correctness, maintainability, and production-readiness.
+Strong focus on correctness, maintainability, and production-readiness
+
 
 ---
 
@@ -110,7 +113,8 @@ The focus is on correctness, maintainability, and production-readiness.
 - Kafka topics are created at startup.
 - Spark streaming jobs consume events and write to Delta tables.
 - Grafana connects to Gold tables to visualize metrics and trigger alerts.
-{The architecture is intentionally lightweight and can be operated on small cloud instances (e.g., t3.medium class) with minimal cost for development and testing.}
+- The architecture is intentionally lightweight and can be operated on small cloud instances (e.g., t3.medium class) with minimal cost for development and testing.
+
 
 Detailed commands are intentionally omitted to keep the focus on system design rather than setup mechanics.
 
