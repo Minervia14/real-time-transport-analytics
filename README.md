@@ -20,8 +20,8 @@ Batch analytics or ad-hoc dashboards are insufficient. This problem requires a s
 ## Architecture Overview
 The system is built around a real-time lakehouse architecture, separating ingestion, processing, storage, and consumption concerns.
 
-![Architecture Diagram](![Architecture diagram](https://github.com/user-attachments/assets/02e09594-e4f7-4811-b3d1-197328e5f5c0)
-)
+![Architecture Diagram](https://github.com/user-attachments/assets/02e09594-e4f7-4811-b3d1-197328e5f5c0)
+
 
 Key characteristics:
 - Event-driven ingestion via Kafka
